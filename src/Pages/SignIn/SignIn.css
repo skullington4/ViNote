@@ -1,0 +1,150 @@
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+.signin-form {
+    background-color: #5e18ae;
+    padding: 48px 36px;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+}
+
+.signin-form h1 {
+    font-size: 28.8px;
+    font-weight: bold;
+    margin-bottom: 24px;
+}
+
+.input-group {
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 16.8px;
+    margin-bottom: 6px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16.8px;
+}
+
+.password-container {
+    display: flex;
+    align-items: center;
+}
+
+.password-container input {
+    flex: 1;
+    margin-right: 12px;
+}
+
+.show-password {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.signin-button {
+    background-color: white;
+    color: #21B19B;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 19.2px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 24px;
+}
+
+.signin-button:hover {
+    background-color: #f1f1f1;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 18px;
+    color: white;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+hr {
+    margin: 36px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+.social-signin {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16.8px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.social-button svg {
+    margin-right: 12px;
+}
+
+.social-button.google {
+    background-color: #db4437;
+    color: white;
+}
+
+.social-button.facebook {
+    background-color: #3b5998;
+    color: white;
+}
+
+.social-button.apple {
+    background-color: black;
+    color: white;
+}
+
+.social-button.outlook {
+    background-color: #0072c6;
+    color: white;
+}
+
+.social-button:hover {
+    opacity: 0.9;
+}
+
+.signin-footer {
+    margin-top: 24px;
+    color: white;
+}
+
+.signin-footer a {
+    color: white;
+    text-decoration: underline;
+}
