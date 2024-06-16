@@ -11,6 +11,9 @@ require('./config/database');
 
 const app = express();
 const authRoutes = require('./routes/api/auth');
+const projectRoutes = require('./routes/api/projects'); // Adjust the path as needed
+const { ensureAuth } = require('./middleware/auth'); // Middleware to ensure user is authenticated
+
 
 app.use(cors()); 
 
@@ -28,9 +31,7 @@ const port = process.env.PORT || 3001;
 
 // Put API routes here, before the "catch all" route
 app.use('/api/auth', authRoutes);
-// app.use('/api/users', require('./routes/api/users'));
-// app.use('/api/notes', require('./routes/api/notes'));
-// app.use('/api/projects', require('./routes/api/projects'));
+app.use('/api/projects', projectRoutes);
 
 
 // The following "catch all" route (note the *) is necessary

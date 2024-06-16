@@ -3,7 +3,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-export default function SignUp() {
+export default function SignUp({ setUser }) {
     const navigate = useNavigate();
 
     const handleGoogleSuccess = async (credentialResponse) => {
@@ -11,8 +11,17 @@ export default function SignUp() {
             const response = await axios.post('http://localhost:3001/api/auth/google', {
                 token: credentialResponse.credential,
             });
-            console.log('Google sign-in successful:', response.data);
-            navigate('/additional-info', { state: { user: response.data } });
+
+            // If user doesn't exist, create the user using the signup endpoint
+            if (response.status === 200) {
+                const user = response.data;
+
+                // Set the user to the global state
+                setUser(user);
+
+                // Navigate to the home page
+                navigate('/');
+            }
         } catch (error) {
             console.error('Google sign-in error:', error);
         }

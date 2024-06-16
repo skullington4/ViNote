@@ -1,59 +1,82 @@
-nav {
-    position: fixed;
-    height: 90px;
-    top: 0;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    z-index: 1000;
-  }
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100px;
+  background-color: #5e4534;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 50px;
+  z-index: 1000;
+  font-family: Montserrat, sans-serif;
+}
 
-  .linkStyle {
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-  }
+.leftLinks,
+.rightLinks {
+  display: flex;
+  align-items: center;
+}
 
-  .logo {
-    padding-right: 50px
-  }
+.leftLinks {
+  flex: 1;
+  justify-content: flex-end;
+  margin-right: 150px;
+}
 
-  .centerLinks {
-    display: flex;
-    justify-content: space-around;
-    width: 50%;
-    font-family: Montserrat;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
+.rightLinks {
+  flex: 1;
+  justify-content: flex-start;
+  margin-left: 150px;
+}
 
-  .userLinks {
-    display: flex;
-    justify-content: space-around;
-    width: 15%;
-  }
+.leftLinks .linkStyle,
+.rightLinks .linkStyle,
+.rightLinks .userButton {
+  margin-right: 70px; /* Add 15px of spacing between each link */
+}
 
-  .userButtons {
-    background-color: #5e18ae;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 10px;
-    width: 2000px;
+.logo {
+  text-align: center;
+  flex: 0;
+}
 
-    
-  }
+.linkStyle {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+}
 
-.active {
-    color: #5e18ae;
+.logoStyle {
+  font-size: 54px;
+  font-weight: bold;
+  color: #C0A2D6;
+  text-decoration: none;
+}
+
+.welcomeMessage {
+  color: white;
+  font-size: 24px;
+  margin-right: 70px;
+}
+
+.userButton {
+  background-color: white;
+  border: none;
+  color: #5e4534;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 21px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.userButton:hover {
+  background-color: #f0f0f0;
+}
+
+.activeLink {
+  color: #C0A2D6;
 }

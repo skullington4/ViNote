@@ -21,12 +21,20 @@ router.post('/google', async (req, res) => {
         // Check if the user already exists
         let user = await User.findOne({ googleId: sub });
 
-        if (user) {
-            return res.status(400).json({ message: 'User already exists' });
+        if (!user) {
+            // User does not exist, create a new user
+            user = new User({
+                googleId: sub,
+                name,
+                email,
+                avatar: picture,
+            });
+
+            await user.save();
         }
 
-        // Return the user information without saving it to the database
-        res.status(200).json({ googleId: sub, name, email, avatar: picture });
+        // Return the user information
+        res.status(200).json(user);
     } catch (error) {
         console.error('Error verifying Google token', error);
         res.status(500).json({ message: 'Internal server error' });
@@ -46,8 +54,6 @@ router.post('/signup', async (req, res) => {
 
         user = new User({
             email,
-            name: `${firstName} ${lastName}`,
-            role,
             firstName,
             lastName,
             password: hashedPassword,

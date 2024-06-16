@@ -6,9 +6,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  name: {
+  firstName: {
     type: String,
-    required: true,
+  },
+  lastName: {
+    type: String,
   },
   email: {
     type: String,
@@ -16,19 +18,6 @@ const userSchema = new mongoose.Schema({
     unique: true,
   },
   avatar: String,
-  role: {
-    type: String,
-    enum: ['business', 'accountant'],
-    required: true,
-  },
-  firstName: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
   password: {
     type: String,
   },

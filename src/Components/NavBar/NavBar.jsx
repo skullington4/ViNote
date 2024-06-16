@@ -1,27 +1,65 @@
-import { Link } from 'react-router-dom';
-import './NavBar.css';
+import { Link, NavLink } from 'react-router-dom';
 import React from 'react';
-import TaxysLogo from '../../Images/TaxysLogo.jpg';
-import { NavLink } from 'react-router-dom';
+import './NavBar.css';
 
+export default function NavBar({ user, setUser }) {
+    const handleSignOut = () => {
+        // Clear the user state to sign out
+        setUser(null);
+    };
 
-export default function NavBar({}) {
+    const firstName = user?.name.split(' ')[0];
+
     return (
-        <nav>
+        <nav className='navbar'>
+            <div className='leftLinks'>
+                <NavLink
+                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
+                    to="/projects"
+                >
+                    Projects
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
+                    to="/charts"
+                >
+                    Charts
+                </NavLink>
+                <NavLink
+                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
+                    to="/notes"
+                >
+                    Notes
+                </NavLink>
+            </div>
+
             <div className='logo'>
-                <NavLink className='linkStyle' to="/" exact activeClassName="activeLink">ViNote</NavLink>
+                <NavLink
+                    className={({ isActive }) => (isActive ? 'logoStyle activeLink' : 'logoStyle')}
+                    to="/"
+                >
+                    ViNote
+                </NavLink>
             </div>
 
-            <div className='centerLinks'>
-                <NavLink className='linkStyle' to="/" exact activeClassName="activeLink">Home</NavLink>
-                <NavLink className='linkStyle' to="/projects" activeClassName="activeLink">Projects</NavLink>
-                <NavLink className='linkStyle' to="/charts" activeClassName="activeLink">Charts</NavLink>
-                <NavLink className='linkStyle' to="/notes" activeClassName="activeLink">Notes</NavLink>
-            </div>
-
-            <div className='userLinks'>
-                <button className='userButtons' onClick={() => window.location.href = '/signup'}>Sign-up</button>
-                <button className='userButtons' onClick={() => window.location.href = '/signin'}>Sign-in</button>
+            <div className='rightLinks'>
+                <NavLink
+                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
+                    to="/about"
+                >
+                    About Us
+                </NavLink>
+                {user ? (
+                    <>
+                        <span className='welcomeMessage'>Welcome, {firstName}</span>
+                        <button className='userButton' onClick={handleSignOut}>Sign Out</button>
+                    </>
+                ) : (
+                    <>
+                        <button className='userButton' onClick={() => window.location.href = '/signin'}>Sign In</button>
+                        <button className='userButton' onClick={() => window.location.href = '/signup'}>Sign Up</button>
+                    </>
+                )}
             </div>
         </nav>
     );
