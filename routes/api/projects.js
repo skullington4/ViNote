@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Project = require('../../models/Project'); // Project model
-const { ensureAuth } = require('../middleware/auth'); // Middleware to ensure user is authenticated
+const { ensureAuth } = require('../../middleware/auth'); // Middleware to ensure user is authenticated
 
 // Get all projects for the logged-in user
 router.get('/', ensureAuth, async (req, res) => {
@@ -16,6 +16,7 @@ router.get('/', ensureAuth, async (req, res) => {
 
 // Add a new project
 router.post('/', ensureAuth, async (req, res) => {
+    console.log(req.body);
     try {
         const { project, description, date } = req.body;
         const newProject = new Project({
@@ -24,6 +25,7 @@ router.post('/', ensureAuth, async (req, res) => {
             date,
             user: req.user._id
         });
+        console.log(newProject);
         await newProject.save();
         res.json(newProject);
     } catch (err) {

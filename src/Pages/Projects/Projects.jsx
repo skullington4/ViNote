@@ -20,7 +20,9 @@ export default function Projects({ user }) {
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/api/projects');
+            const res = await axios.get('http://localhost:3001/api/projects', {
+                withCredentials: true
+            });
             setProjects(Array.isArray(res.data) ? res.data : []);
         } catch (err) {
             console.error(err);
@@ -34,6 +36,8 @@ export default function Projects({ user }) {
                 project: projectName,
                 description: projectDescription,
                 date: projectDate
+            }, {
+                withCredentials: true
             });
             setProjects([...projects, res.data]);
             setProjectName('');
