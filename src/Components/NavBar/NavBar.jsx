@@ -9,7 +9,6 @@ export default function NavBar({ user, setUser }) {
     return (
         <nav className="navbar">
             <div className="leftLinks">
-                <NavLink className="linkStyle" to="/" exact activeClassName="activeLink">Home</NavLink>
                 <NavLink className="linkStyle" to="/projects" activeClassName="activeLink">Projects</NavLink>
                 <NavLink className="linkStyle" to="/charts" activeClassName="activeLink">Charts</NavLink>
                 <NavLink className="linkStyle" to="/notes" activeClassName="activeLink">Notes</NavLink>
