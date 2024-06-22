@@ -1,3 +1,5 @@
+// routes/api/projects.js
+
 const express = require('express');
 const router = express.Router();
 const Project = require('../../models/Project'); // Project model
@@ -16,14 +18,15 @@ router.get('/', ensureAuth, async (req, res) => {
 
 // Add a new project
 router.post('/', ensureAuth, async (req, res) => {
-    console.log(req.body);
+    console.log('Request Body:', req.body);
+    console.log('Authenticated User:', req.user);
     try {
         const { project, description, date } = req.body;
         const newProject = new Project({
             project,
             description,
             date,
-            user: req.user._id
+            user: req.user._id // Ensure the user is set correctly
         });
         console.log(newProject);
         await newProject.save();

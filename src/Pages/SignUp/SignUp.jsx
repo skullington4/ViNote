@@ -1,43 +1,119 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
+import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './SignUp.css';
 
 export default function SignUp({ setUser }) {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
     const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://localhost:3001/api/auth/register', formData);
+            const { token } = response.data;
+            localStorage.setItem('token', token);
+            const user = jwtDecode(token);
+            setUser(user);
+            navigate('/');
+        } catch (error) {
+            console.error('Error signing up', error);
+            alert('Error signing up');
+        }
+    };
 
     const handleGoogleSuccess = async (credentialResponse) => {
         try {
+            console.log('Google Credential Response:', credentialResponse);
+            const { credential } = credentialResponse;
             const response = await axios.post('http://localhost:3001/api/auth/google', {
-                token: credentialResponse.credential,
+                token: credential,
             });
 
-            // If user doesn't exist, create the user using the signup endpoint
-            if (response.status === 200) {
-                const user = response.data;
-
-                // Set the user to the global state
-                setUser(user);
-
-                // Navigate to the home page
-                navigate('/');
-            }
+            const { token } = response.data;
+            localStorage.setItem('token', token);
+            const user = jwtDecode(token);
+            setUser(user);
+            navigate('/');
         } catch (error) {
-            console.error('Google sign-in error:', error);
+            console.error('Google sign-up error:', error);
         }
     };
 
     const handleGoogleFailure = () => {
-        console.log('Google sign-in failed');
+        console.log('Google sign-up failed');
     };
 
     return (
         <div className="signup-container">
-            <h1>Sign Up</h1>
-            <GoogleLogin
-                onSuccess={handleGoogleSuccess}
-                onError={handleGoogleFailure}
-            />
+            <form className="signup-form" onSubmit={handleSubmit}>
+                <h1>Sign Up</h1>
+                <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+                <input
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Confirm Password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                />
+                <button type="submit">Sign Up</button>
+            </form>
+            <hr />
+            <div className="social-signin">
+                <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleFailure}
+                />
+            </div>
         </div>
     );
 }

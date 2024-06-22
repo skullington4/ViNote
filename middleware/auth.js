@@ -1,4 +1,3 @@
-// middleware/auth.js
 module.exports.ensureAuth = function(req, res, next) {
     console.log('Checking authentication...');
     console.log('Session ID:', req.sessionID);

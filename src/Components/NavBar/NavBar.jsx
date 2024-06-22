@@ -1,63 +1,37 @@
-import { Link, NavLink } from 'react-router-dom';
-import React from 'react';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './NavBar.css';
+import React from 'react';
 
 export default function NavBar({ user, setUser }) {
-    const handleSignOut = () => {
-        // Clear the user state to sign out
-        setUser(null);
-    };
-
-    const firstName = user?.name.split(' ')[0];
+    const navigate = useNavigate();
+    const userName = user && user.name ? user.name.split(' ')[0] : null;
 
     return (
-        <nav className='navbar'>
-            <div className='leftLinks'>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
-                    to="/projects"
-                >
-                    Projects
-                </NavLink>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
-                    to="/charts"
-                >
-                    Charts
-                </NavLink>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
-                    to="/notes"
-                >
-                    Notes
-                </NavLink>
+        <nav className="navbar">
+            <div className="leftLinks">
+                <NavLink className="linkStyle" to="/" exact activeClassName="activeLink">Home</NavLink>
+                <NavLink className="linkStyle" to="/projects" activeClassName="activeLink">Projects</NavLink>
+                <NavLink className="linkStyle" to="/charts" activeClassName="activeLink">Charts</NavLink>
+                <NavLink className="linkStyle" to="/notes" activeClassName="activeLink">Notes</NavLink>
             </div>
 
-            <div className='logo'>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'logoStyle activeLink' : 'logoStyle')}
-                    to="/"
-                >
-                    ViNote
-                </NavLink>
+            <div className="logo">
+                <NavLink className="logoStyle" to="/" exact activeClassName="activeLink">ViNote</NavLink>
             </div>
 
-            <div className='rightLinks'>
-                <NavLink
-                    className={({ isActive }) => (isActive ? 'linkStyle activeLink' : 'linkStyle')}
-                    to="/about"
-                >
-                    About Us
-                </NavLink>
+            <div className="rightLinks">
                 {user ? (
                     <>
-                        <span className='welcomeMessage'>Welcome, {firstName}</span>
-                        <button className='userButton' onClick={handleSignOut}>Sign Out</button>
+                        <span className="welcomeText">Welcome, {userName}</span>
+                        <button className="userButton" onClick={() => {
+                            setUser(null);
+                            navigate('/signin');
+                        }}>Sign Out</button>
                     </>
                 ) : (
                     <>
-                        <button className='userButton' onClick={() => window.location.href = '/signin'}>Sign In</button>
-                        <button className='userButton' onClick={() => window.location.href = '/signup'}>Sign Up</button>
+                        <button className="userButton" onClick={() => navigate('/signup')}>Sign-up</button>
+                        <button className="userButton" onClick={() => navigate('/signin')}>Sign-in</button>
                     </>
                 )}
             </div>

@@ -18,24 +18,28 @@ export default function Projects({ user }) {
         }
     }, [user, navigate]);
 
-    const fetchProjects = async () => {
-        try {
-            const res = await axios.get('http://localhost:3001/api/projects', {
-                withCredentials: true
-            });
-            setProjects(Array.isArray(res.data) ? res.data : []);
-        } catch (err) {
-            console.error(err);
-            setProjects([]);
-        }
-    };
+// Fetch projects with JWT
+const fetchProjects = async () => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get('http://localhost:3001/api/projects', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        // Handle the response...
+    } catch (error) {
+        console.error('Error fetching projects', error);
+    }
+};
 
     const handleAddProject = async () => {
         try {
             const res = await axios.post('http://localhost:3001/api/projects', {
                 project: projectName,
                 description: projectDescription,
-                date: projectDate
+                date: projectDate,
+                user: user
             }, {
                 withCredentials: true
             });
@@ -48,7 +52,7 @@ export default function Projects({ user }) {
         }
     };
 
-    const firstName = user?.name.split(' ')[0];
+    const firstName = user && user.name ? user.name.split(' ')[0] : null;
 
     return (
         <div className="projects-container">
