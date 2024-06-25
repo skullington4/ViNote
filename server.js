@@ -12,7 +12,6 @@ require('./config/passport')(passport);
 const app = express();
 const authRoutes = require('./routes/api/auth');
 const projectRoutes = require('./routes/api/projects');
-const { ensureAuth } = require('./middleware/auth');
 
 const sessionSecret = process.env.SESSION_SECRET || 'yourSecretKey';
 

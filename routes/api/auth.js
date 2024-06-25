@@ -5,6 +5,7 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const { OAuth2Client } = require('google-auth-library');
 const User = require('../../models/user');
+const { ensureAuth } = require('../../middleware/auth');
 require('dotenv').config();
 
 const client = new OAuth2Client(process.env.REACT_APP_GOOGLE_CLIENT_ID);
@@ -24,7 +25,7 @@ const generateToken = (user) => {
     );
 };
 
-
+// Google OAuth route
 router.post('/google', async (req, res) => {
     const { token } = req.body;
 
@@ -123,7 +124,8 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.get('/me', (req, res) => {
+// Get the logged-in user's information
+router.get('/me', ensureAuth, (req, res) => {
     if (req.isAuthenticated()) {
         res.json({ user: req.user });
     } else {

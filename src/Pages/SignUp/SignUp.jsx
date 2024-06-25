@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
-import {jwtDecode} from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { GoogleLogin } from '@react-oauth/google';
+import {jwtDecode} from 'jwt-decode';
 import './SignUp.css';
+
+axios.defaults.withCredentials = true;
 
 export default function SignUp({ setUser }) {
     const [formData, setFormData] = useState({
@@ -53,12 +55,12 @@ export default function SignUp({ setUser }) {
             setUser(user);
             navigate('/');
         } catch (error) {
-            console.error('Google sign-up error:', error);
+            console.error('Google sign-in error:', error);
         }
     };
 
     const handleGoogleFailure = () => {
-        console.log('Google sign-up failed');
+        console.log('Google sign-in failed');
     };
 
     return (

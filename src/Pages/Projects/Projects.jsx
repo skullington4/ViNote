@@ -18,15 +18,41 @@ export default function Projects({ user }) {
         }
     }, [user, navigate]);
 
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                console.log('Token:', token);
+                const response = await axios.get('http://localhost:3001/api/auth/me', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log('Authenticated user:', response.data.user);
+                // Set the authenticated user if necessary
+            } catch (error) {
+                console.error('Error checking authentication', error);
+            }
+        };
+
+        checkAuth();
+    }, [user]);
+
+
 // Fetch projects with JWT
 const fetchProjects = async () => {
+
     try {
         const token = localStorage.getItem('token');
+        console.log('Token:', token)
+        console.log('User in fetchProjects:', user)
         const response = await axios.get('http://localhost:3001/api/projects', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
+            
         });
+        
         // Handle the response...
     } catch (error) {
         console.error('Error fetching projects', error);
