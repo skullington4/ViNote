@@ -14,7 +14,8 @@ const generateToken = (user) => {
         {
             id: user._id,
             email: user.email,
-            name: user.name,
+            firstName: user.firstName,
+            lastName: user.lastName,
             googleId: user.googleId,
             avatar: user.avatar
         },
@@ -23,7 +24,7 @@ const generateToken = (user) => {
     );
 };
 
-// Existing Google auth route
+
 router.post('/google', async (req, res) => {
     const { token } = req.body;
 
@@ -36,12 +37,17 @@ router.post('/google', async (req, res) => {
         const { sub, name, email, picture } = ticket.getPayload();
         console.log('Google user info:', { sub, name, email, picture });
 
+        // Split the name into firstName and lastName
+        const [firstName, ...lastNameArray] = name.split(' ');
+        const lastName = lastNameArray.join(' ');
+
         let user = await User.findOne({ googleId: sub });
 
         if (!user) {
             user = new User({
                 googleId: sub,
-                name,
+                firstName,
+                lastName,
                 email,
                 avatar: picture,
             });

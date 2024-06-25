@@ -51,7 +51,7 @@ module.exports = function(passport) {
         console.log('Serializing user:', user);
         done(null, user.id);
     });
-
+    
     passport.deserializeUser(async (id, done) => {
         console.log('Deserializing user by ID:', id);
         try {
@@ -60,5 +60,5 @@ module.exports = function(passport) {
         } catch (err) {
             done(err, false);
         }
-    });
+    });    
 };

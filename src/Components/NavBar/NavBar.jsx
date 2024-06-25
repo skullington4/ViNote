@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function NavBar({ user, setUser }) {
     const navigate = useNavigate();
-    const userName = user && user.name ? user.name.split(' ')[0] : null;
+    const userName = user && user.firstName ? user.firstName : null;
 
     return (
         <nav className="navbar">
