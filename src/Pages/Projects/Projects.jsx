@@ -78,7 +78,8 @@ const fetchProjects = async () => {
         }
     };
 
-    const firstName = user && user.name ? user.name.split(' ')[0] : null;
+    const userName = user && user.firstName ? user.firstName : null;
+
 
     return (
         <div className="projects-container">
