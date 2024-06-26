@@ -18,56 +18,33 @@ export default function Projects({ user }) {
         }
     }, [user, navigate]);
 
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                console.log('Token:', token);
-                const response = await axios.get('http://localhost:3001/api/auth/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                console.log('Authenticated user:', response.data.user);
-                // Set the authenticated user if necessary
-            } catch (error) {
-                console.error('Error checking authentication', error);
-            }
-        };
-
-        checkAuth();
-    }, [user]);
-
-
-// Fetch projects with JWT
-const fetchProjects = async () => {
-
-    try {
-        const token = localStorage.getItem('token');
-        console.log('Token:', token)
-        console.log('User in fetchProjects:', user)
-        const response = await axios.get('http://localhost:3001/api/projects', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-            
-        });
-        
-        // Handle the response...
-    } catch (error) {
-        console.error('Error fetching projects', error);
-    }
-};
+    const fetchProjects = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            console.log('Token:', token);
+            const response = await axios.get('http://localhost:3001/api/projects', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setProjects(response.data);
+            console.log('Fetched Projects:', response.data);
+        } catch (error) {
+            console.error('Error fetching projects', error);
+        }
+    };
 
     const handleAddProject = async () => {
         try {
+            const token = localStorage.getItem('token');
             const res = await axios.post('http://localhost:3001/api/projects', {
                 project: projectName,
                 description: projectDescription,
                 date: projectDate,
-                user: user
             }, {
-                withCredentials: true
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
             setProjects([...projects, res.data]);
             setProjectName('');
@@ -78,18 +55,25 @@ const fetchProjects = async () => {
         }
     };
 
-    const userName = user && user.firstName ? user.firstName : null;
+    const handleProjectClick = (projectId) => {
+        navigate(`/projects/${projectId}`);
+    };
 
+    const userName = user && user.firstName ? user.firstName : null;
 
     return (
         <div className="projects-container">
-            <h1>Welcome to {firstName}'s Projects</h1>
+            <h1>Welcome to {userName}'s Projects</h1>
             <div className="projects-list">
                 {projects.length === 0 ? (
                     <p>No projects</p>
                 ) : (
                     projects.map((project) => (
-                        <div className="project-card" key={project._id}>
+                        <div 
+                            className="project-card" 
+                            key={project._id} 
+                            onClick={() => handleProjectClick(project._id)}
+                        >
                             <h2>{project.project}</h2>
                             <p>{project.description}</p>
                             <p>{new Date(project.createdAt).toLocaleDateString()}</p>

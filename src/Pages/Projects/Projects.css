@@ -14,16 +14,37 @@
     color: white;
     padding: 20px;
     border-radius: 10px;
-    width: calc(33% - 20px);
+    width: 325px; /* Set the width to 325px */
+    height: 200px; /* Set the height to 200px */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text horizontally */
 }
 
 .project-card h2 {
     margin: 0 0 10px 0;
+    font-size: 0.95em; /* Make text 5% smaller */
+    white-space: nowrap; /* Ensure text does not wrap */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
 }
 
 .project-card p {
     margin: 5px 0;
+    font-size: 0.95em; /* Make text 5% smaller */
+    white-space: nowrap; /* Ensure text does not wrap */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for overflowing text */
+}
+
+.project-card:hover {
+    transform: scale(1.05);
 }
 
 .new-project-heading {
